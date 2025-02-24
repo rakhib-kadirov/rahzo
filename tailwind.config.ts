@@ -16,7 +16,9 @@ const config: Config = {
           400: '#2589FE',
           500: '#0070F3',
           600: '#2F6FEB',
+          700: '#4F46E5',
         },
+        // 'bg-purple': '#4F46E5'
       },
     },
     keyframes: {

@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model friends {
+  id            Int     @id @unique(map: "id_UNIQUE")
+  first_name    String  @db.VarChar(45)
+  last_name     String  @db.VarChar(45)
+  profile_photo String? @db.VarChar(45)
+}
+
+model posts_user {
+  id_post    Int      @id @unique(map: "id_post_UNIQUE") @default(autoincrement())
+  users_id   Int
+  body_text  String   @db.VarChar(1000)
+  date       DateTime @default(now()) @db.Timestamp(0)
+  first_name String   @db.VarChar(255)
+  last_name  String   @db.VarChar(255)
+}
+
+model users {
+  id            Int       @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  login         String    @db.VarChar(45)
+  password      String    @db.VarChar(255)
+  first_name    String    @db.VarChar(45)
+  last_name     String    @db.VarChar(45)
+  profile_photo Bytes?    @db.Blob
+  status        String?   @db.VarChar(10)
+  message       message[]
+}
+
+model message {
+  id         Int      @id @default(autoincrement())
+  text       String   @db.Text
+  userId     Int
+  createdAt  DateTime @default(now()) @db.DateTime(0)
+  first_name String   @db.Text
+  last_name  String   @db.Text
+  users      users    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "message_ibfk_1")
+
+  @@index([userId], map: "userId")
+}

@@ -1,14 +1,22 @@
-import AcmeLogo from '@/app/ui/acme-logo';
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
-import { lusitana } from '@/app/ui/fonts';
-import Image from 'next/image';
+// import AcmeLogo from '@/app/ui/acme-logo';
+// import { ArrowRightIcon } from '@heroicons/react/24/outline';
+// import Link from 'next/link';
+// import { lusitana } from '@/app/ui/fonts';
+// import Image from 'next/image';
 import styles from '@/app/ui/home.module.css'
+import SideNav from '@/app/ui/dashboard/sidenav'
 
-export default function Page() {
+export default function Page({ children }: { children: React.ReactNode }) {
   return (
-    <main className="flex min-h-screen flex-col p-6">
-      <div className={styles.shape}>
+    <main className={styles.mainFont}>
+      <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+        <div className="w-full flex-none md:w-80">
+          <SideNav />
+        </div>
+        <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
+      </div>
+
+      {/* <div className={styles.shape}>
         <AcmeLogo />
       </div>
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
@@ -28,7 +36,7 @@ export default function Page() {
           </Link>
         </div>
         <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
-          {/* Add Hero Images Here */}
+          Add Hero Images Here 
           <Image
             src="/hero-desktop.png"
             width={1000}
@@ -44,7 +52,7 @@ export default function Page() {
             alt="Screenshots of the dashboard project showing mobile version"
           />
         </div>
-      </div>
+      </div> */}
     </main>
   );
 }

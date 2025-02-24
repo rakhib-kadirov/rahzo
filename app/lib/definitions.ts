@@ -4,10 +4,22 @@
 // However, these types are generated automatically if you're using an ORM such as Prisma.
 export type User = {
   id: string;
-  name: string;
-  email: string;
+  login: string;
   password: string;
+  first_name: string;
+  last_name: string;
+  profile_photo: string;
+  status: string;
 };
+
+export type Post = {
+  id_post: number;
+  body_text: string;
+  date: string;
+  first_name: string;
+  last_name: string;
+  profile_photo: string;
+}
 
 export type Customer = {
   id: string;
@@ -44,15 +56,12 @@ export type LatestInvoiceRaw = Omit<LatestInvoice, 'amount'> & {
   amount: number;
 };
 
-export type InvoicesTable = {
+export type MeTable = {
   id: string;
-  customer_id: string;
   name: string;
   email: string;
   image_url: string;
-  date: string;
-  amount: number;
-  status: 'pending' | 'paid';
+  status: 'online' | 'offline';
 };
 
 export type CustomersTableType = {
@@ -75,14 +84,16 @@ export type FormattedCustomersTable = {
   total_paid: string;
 };
 
-export type CustomerField = {
+export type MeField = {
   id: string;
   name: string;
 };
 
-export type InvoiceForm = {
+export type ProfileForm = {
   id: string;
-  customer_id: string;
-  amount: number;
-  status: 'pending' | 'paid';
+  login: string;
+  password: string;
+  first_name: string;
+  last_name: string;
+  profile_photo: string;
 };

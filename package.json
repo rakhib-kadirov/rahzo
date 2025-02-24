@@ -1,31 +1,56 @@
 {
   "private": true,
   "scripts": {
-    "build": "next build",
-    "dev": "next dev --turbopack",
-    "start": "next start"
+    "build": "prisma generate && next build",
+    "dev": "concurrently \"next dev\" \"node server.js\"",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "@prisma/client": "^6.4.1",
     "@tailwindcss/forms": "^0.5.9",
     "@vercel/postgres": "^0.10.0",
     "autoprefixer": "10.4.20",
+    "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "clsx": "^2.1.1",
-    "next": "latest",
-    "next-auth": "5.0.0-beta.19",
+    "cookie": "^1.0.2",
+    "date-fns": "^4.1.0",
+    "express": "^4.21.2",
+    "jose": "^5.9.6",
+    "jsonwebtoken": "^9.0.2",
+    "mock-aws-s3": "^4.0.2",
+    "mysql2": "^3.12.0",
+    "net": "^1.0.2",
+    "next": "15.1.7",
+    "next-auth": "5.0.0-beta.25",
+    "nock": "^14.0.0",
+    "pg": "^8.13.3",
     "postcss": "8.4.49",
     "react": "19.0.0",
     "react-dom": "19.0.0",
+    "react-query": "^3.39.3",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "swr": "^2.3.2",
     "tailwindcss": "3.4.16",
+    "tls": "^0.0.1",
     "typescript": "5.7.2",
     "use-debounce": "^10.0.4",
+    "ws": "^8.18.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.8",
     "@types/node": "22.10.1",
     "@types/react": "19.0.0",
-    "@types/react-dom": "19.0.0"
+    "@types/react-dom": "19.0.0",
+    "@types/ws": "^8.5.14",
+    "concurrently": "^9.1.2",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.4",
+    "prisma": "^6.4.1"
   }
 }
