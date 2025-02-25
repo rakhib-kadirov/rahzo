@@ -1,5 +1,6 @@
 'use client'
 
+import { User } from '@/app/lib/definitions';
 import {
     FaceSmileIcon,
     MicrophoneIcon
@@ -9,7 +10,8 @@ import React, { useState } from 'react';
 
 export default function WritePost() {
     const { data: session } = useSession()
-    const [formData, setFormData] = useState({ users_id: session?.user?.id, body_text: "", date: Date })
+    const user = session?.user as User
+    const [formData, setFormData] = useState({ users_id: user?.id, body_text: "", date: Date })
     const [message, setMessage] = useState("")
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -30,7 +32,6 @@ export default function WritePost() {
                 return
             }
 
-            const result = await response.json()
             // setMessage(`Пост опубликован успешно! ID поста: ${result.postId}, ${result.date}`)
             alert(`Пост опубликован успешно!`)
         }

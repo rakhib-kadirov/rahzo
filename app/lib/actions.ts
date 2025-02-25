@@ -92,7 +92,7 @@ export async function updateProfile(prevState: string | undefined, formData: For
         `)
     } catch (error) {
         return {
-            message: 'Database Error: Failed to Update Profile.',
+            message: `Database Error: Failed to Update Profile. ${error}`,
         };
     }
 
@@ -107,7 +107,7 @@ export async function deleteInvoice(id: string) {
         return { message: 'Deleted Invoice' }
     } catch (error) {
         return {
-            message: 'Database Error: Failed to Delete Invoice.',
+            message: `Database Error: Failed to Delete Invoice. ${error}`,
         };
     }
 }
@@ -125,19 +125,20 @@ export async function authenticate(
             ...data,
             redirect: true,
         })
-    } catch (error) {
+    } catch (error: any) {
         if (error instanceof AuthError) {
-            switch (error.type) {
-                case 'CredentialsSignin':
-                    return 'Invalid credentials.'
-                default:
-                    return 'Something went wrong.'
-            }
+        switch (error.type) {
+            case 'CredentialsSignin':
+                return 'Invalid credentials.'
+            default:
+                return 'Something went wrong.'
+        }
         }
         throw error
     }
 }
 
 export async function serverSignOut() {
-    await signOut({ redirectTo: "/login" });
+    // await signOut({ redirectTo: "/login" });
+    await signOut({ redirect: true });
 }

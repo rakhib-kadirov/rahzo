@@ -7,7 +7,6 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcrypt"
 import { serialize } from "cookie";
 import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
 
 // export async function POST() {
 //     try {

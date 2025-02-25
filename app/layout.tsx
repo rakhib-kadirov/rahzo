@@ -1,7 +1,7 @@
 // 'use client'
 
 import '@/app/ui/global.css'
-import { inter, plusJakarta } from '@/app/ui/fonts'
+import { plusJakarta } from '@/app/ui/fonts'
 import { Metadata } from 'next'
 import QueryProvider from './QueryProvider'
 import React, { useEffect } from 'react'

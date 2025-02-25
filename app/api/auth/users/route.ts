@@ -1,4 +1,3 @@
-import { db } from "@/app/lib/db";
 import { NextResponse } from "next/server";
 import { PrismaClient } from '@prisma/client'
 

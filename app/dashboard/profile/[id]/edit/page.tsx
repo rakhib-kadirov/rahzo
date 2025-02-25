@@ -1,5 +1,5 @@
 import Breadcrumbs from "@/app/ui/profile/breadcrumbs";
-import Form from "@/app/ui/profile/edit-form";
+// import Form from "@/app/ui/profile/edit-form";
 import { fetchProfileById } from "@/app/lib/data";
 import { notFound } from "next/navigation";
 
@@ -30,7 +30,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 					}
 				]}
 			/>
-			<Form profile={profile} />
+			{/* <Form profile={profile} /> */}
 		</main>
 	)
 }

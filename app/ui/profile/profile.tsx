@@ -7,10 +7,7 @@ import { useEffect, useState } from "react"
 import { UpdateProfile } from '@/app/ui/profile/buttons';
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
-import UserPosts from "@/app/dashboard/posts/page";
-import ProfilePhoto from "@/app/ui/profile-photo/index";
 import WritePost from "../dashboard/write-post";
-import Posts from "../dashboard/userPosts";
 import Link from "next/link"
 import { format } from "date-fns"
 
@@ -18,8 +15,9 @@ export default function Profile() {
     const [users, setUsers] = useState<User[]>([])
     const [posts, setPosts] = useState<Post[]>([])
     const { data: session } = useSession()
+    const userSession = session?.user as User
     const params = useParams()
-    const id = params.id as String
+    const id = params.id as string
 
     useEffect(() => {
         const fetchData = async () => {
@@ -86,7 +84,7 @@ export default function Profile() {
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-6">
-                                    {session?.user?.id?.toString() === user.id.toString() ? (
+                                    {userSession?.id.toString() === user.id.toString() ? (
                                         <UpdateProfile />
                                     ) : (
                                         'Добавить в друзья'
@@ -94,7 +92,7 @@ export default function Profile() {
                                 </div>
                             </div>
                         </main>
-                        {session?.user?.id?.toString() === user.id.toString() ? (
+                        {userSession?.id.toString() === user.id.toString() ? (
                             <main className="flex w-3/4 items-center rounded-md bg-gray-50 p-3 text-sm font-medium md:flex-none md:p-2 md:px-3">
                                 <WritePost />
                             </main>

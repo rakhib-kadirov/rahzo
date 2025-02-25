@@ -8,10 +8,9 @@ import {
 } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
-import { useActionState, useEffect } from 'react';
+import { useActionState } from 'react';
 import { authenticate } from '@/app/lib/actions';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useSession } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
 
 export const dynamic = "force-dynamic"
 

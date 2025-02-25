@@ -1,4 +1,4 @@
-import { auth, signIn, signOut } from "@/auth";
+import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
 // export const { GET, POST } = auth;

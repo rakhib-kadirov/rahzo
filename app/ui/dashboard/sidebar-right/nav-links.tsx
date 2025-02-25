@@ -1,18 +1,12 @@
 'use client'
 
-import {
-  UserGroupIcon,
-  HomeIcon,
-  ChatBubbleOvalLeftIcon,
-  ChatBubbleBottomCenterTextIcon,
-  Cog8ToothIcon,
-} from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import Friends from '@/app/ui/friends/index';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+// import { User } from '@/app/lib/definitions';
 
 const links = [
   {
@@ -41,11 +35,19 @@ const contact = [
   }
 ]
 
+interface User {
+  id: string;
+  first_name?: string | null;
+  last_name?: string | null;
+}
+
 export default function NavLinksRight() {
   const pathname = usePathname()
   const { data: session } = useSession()
   const [posts, setPosts] = useState([])
 
+  const user = session?.user as User
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -69,10 +71,10 @@ export default function NavLinksRight() {
       <div className='justify-center text-center'>
         {/* {infoName.map((info) => {
           return ( */}
-        <div key={session?.user?.first_name}>
+        <div key={user?.first_name}>
           <div className='flex justify-center text-center'>
-            <Link href={`/dashboard/profile/${session?.user?.id}`}>
-              <h4 className='text-[20px] font-semibold text-gray-700'>{session?.user?.first_name} {session?.user?.last_name}</h4>
+            <Link href={`/dashboard/profile/${user?.id}`}>
+              <h4 className='text-[20px] font-semibold text-gray-700'>{user?.first_name} {user?.last_name}</h4>
             </Link>
           </div>
           {/* <h6>{info.href}</h6>

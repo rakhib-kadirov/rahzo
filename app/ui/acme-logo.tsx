@@ -1,9 +1,7 @@
 'use client'
 
-import { GlobeAltIcon } from '@heroicons/react/24/outline';
 import { lusitana } from '@/app/ui/fonts';
 import Image from 'next/image';
-import Logo from '@/public/logo.svg'
 
 export default function AcmeLogo() {
   return (

@@ -2,7 +2,7 @@ import { db } from "@/app/lib/db";
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+export async function GET() {
     try {
         const session = await auth()
         // const sql = `SELECT * FROM posts_user`

@@ -1,11 +1,11 @@
 'use client'
 
-import { useState, useActionState } from 'react';
+import { useState } from 'react';
 import { plusJakarta } from '../fonts';
 import {
     AtSymbolIcon,
     KeyIcon,
-    ExclamationCircleIcon,
+    // ExclamationCircleIcon,
     ChevronRightIcon
 } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';

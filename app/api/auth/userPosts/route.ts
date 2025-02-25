@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
     try {
         const session = await auth()
-        const { users_id, body_text } = await request.json()
+        const { body_text } = await request.json()
         const dateNow = new Date(Date.now())
         const [result] = await db.query(
             "INSERT INTO posts_user (users_id, body_text, date) VALUES (?, ?, ?)",
@@ -26,10 +26,10 @@ export async function POST(request: Request) {
     }
 }
 
-export async function GET(request: Request) {
+export async function GET() {
     try {
-        const url = new URL(request.url);
-        const id = url.pathname.split("/").pop()
+        // const url = new URL(request.url);
+        // const id = url.pathname.split("/").pop()
 
         const session = await auth()
         const sql = `

@@ -1,11 +1,8 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/auth";
 import { db } from "@/app/lib/db";
-import { NextApiRequest, NextApiResponse } from "next";
 
 export async function GET(request: Request) {
     try {
-        const session = await auth()
         // const { searchParams } = new URL(request.url)
         // if (!params?.params?.id) {
         //     return NextResponse.json({ success: false, error: "ID не передан" }, { status: 400 });

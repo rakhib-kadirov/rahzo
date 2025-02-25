@@ -1,8 +1,9 @@
 'use client'
-import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { PencilIcon, PlusIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { deleteInvoice } from '@/app/lib/actions';
+// import { deleteInvoice } from '@/app/lib/actions';
 import { useSession } from 'next-auth/react';
+import { User } from '@/app/lib/definitions';
 
 export function CreateInvoice() {
   return (
@@ -18,9 +19,10 @@ export function CreateInvoice() {
 
 export function UpdateProfile() {
   const { data: session } = useSession()
+  const user = session?.user as User
   return (
     <Link
-      href={`/dashboard/profile/${session?.user?.id}/edit`}
+      href={`/dashboard/profile/${user?.id}/edit`}
       className="rounded-md border p-2 hover:bg-gray-100"
     >
       <PencilIcon className="w-5" />
@@ -28,15 +30,15 @@ export function UpdateProfile() {
   );
 }
 
-export function DeleteInvoice({ id }: { id: string }) {
-  const deleteInvoiceWithId = deleteInvoice.bind(null, id)
+// export function DeleteInvoice({ id }: { id: string }) {
+//   const deleteInvoiceWithId = deleteInvoice.bind(null, id)
 
-  return (
-    <form action={deleteInvoiceWithId}>
-      <button className="rounded-md border p-2 hover:bg-gray-100">
-        <span className="sr-only">Delete</span>
-        <TrashIcon className="w-5" />
-      </button>
-    </form>
-  );
-}
+//   return (
+//     <form action={deleteInvoiceWithId}>
+//       <button className="rounded-md border p-2 hover:bg-gray-100">
+//         <span className="sr-only">Delete</span>
+//         <TrashIcon className="w-5" />
+//       </button>
+//     </form>
+//   );
+// }

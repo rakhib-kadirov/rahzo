@@ -3,29 +3,18 @@
 import {
     ExclamationCircleIcon,
 } from '@heroicons/react/24/outline';
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, useState } from 'react';
 import { authenticate } from '@/app/lib/actions';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { signIn, useSession } from "next-auth/react"
-
-// const API_URL = 'http://localhost:3000/'
-
-interface User {
-    id: number;
-    first_name: string;
-    last_name: string;
-    profile_photo: string;
-    status: string;
-}
+import { useSearchParams } from 'next/navigation';
 
 export default function Login() {
     const searchParams = useSearchParams()
     const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
 
     const [formData, setFormData] = useState({ login: "", password: "" })
-    const [message, setMessage] = useState("")
+    const [message] = useState("")
 
-    const [errorMessage, formAction, isPending] = useActionState(
+    const [errorMessage, formAction] = useActionState(
         authenticate,
         undefined
     )

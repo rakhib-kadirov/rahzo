@@ -2,12 +2,12 @@ import NextAuth, { JWT, Session } from "next-auth";
 // import { authConfig } from "./auth.config";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { z } from "zod";
-import { sql } from "@vercel/postgres";
+// import { sql } from "@vercel/postgres";
 import type { User } from '@/app/lib/definitions'
 import bcrypt from 'bcrypt'
 import { db } from '@/app/lib/db'
-import { createSession } from "./app/lib/session";
-import { redirect } from "next/navigation";
+// import { createSession } from "./app/lib/session";
+// import { redirect } from "next/navigation";
 
 // export async function registerUser(login: string, password: string, first_name: string, last_name: string) {
 //     try {
