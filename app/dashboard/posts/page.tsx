@@ -46,11 +46,11 @@ export default function UserPosts() {
                                 <div className="flex items-center gap-3">
                                     <div>
                                         <Image
-                                            className="rounded-full w-[40] h-[40]"
+                                            className="rounded-full w-[40px] h-[40px]"
                                             src={post.profile_photo ? post.profile_photo : "/stock.png"}
                                             alt=""
-                                            width={128}
-                                            height={128}
+                                            width={40}
+                                            height={40}
                                         />
                                     </div>
                                     <div className="grid">

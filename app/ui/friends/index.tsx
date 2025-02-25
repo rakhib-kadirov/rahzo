@@ -64,9 +64,9 @@ export default function Friends() {
                             <div className='flex justify-center'>
                                 <Image
                                     src={user.profile_photo !== "" ? "/stock.png" : user.profile_photo}
-                                    className="mr-2 rounded-full w-10 h-10 min-w-10 min-h-10"
-                                    width={32}
-                                    height={32}
+                                    className="mr-2 rounded-full w-[40px] h-[40px] min-w-10 min-h-10"
+                                    width={40}
+                                    height={40}
                                     alt='profile picture'
                                 />
                             </div>

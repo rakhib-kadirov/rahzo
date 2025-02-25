@@ -68,11 +68,11 @@ export default function Profile() {
                                 <div className="flex items-center gap-6">
                                     <div>
                                         <Image
-                                            className="rounded-full w-[150] h-[150]"
+                                            className="rounded-full w-[150px] h-[150px]"
                                             alt="profile_photo"
                                             src={user.profile_photo ? user.profile_photo : "/stock.png"}
-                                            width={350}
-                                            height={350}
+                                            width={150}
+                                            height={150}
                                             priority
                                         />
                                     </div>
@@ -112,7 +112,7 @@ export default function Profile() {
                                                     <div className="flex items-center gap-3">
                                                         <div>
                                                             <Image
-                                                                className="rounded-full w-[40] h-[40]"
+                                                                className="rounded-full w-[40px] h-[40px]"
                                                                 src={post.profile_photo ? post.profile_photo : "/stock.png"}
                                                                 alt=""
                                                                 width={128}

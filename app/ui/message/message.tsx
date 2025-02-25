@@ -5,6 +5,8 @@ import Search from "../search";
 import io, { Socket } from "socket.io-client";
 import { useSession } from "next-auth/react";
 import clsx from "clsx";
+import Image from "next/image";
+import { format } from "date-fns"
 
 // const socket = io('http://localhost:3001', {
 //     path: '/api/socket.io',
@@ -18,6 +20,7 @@ interface Message {
     createdAt: string;
     first_name: string;
     last_name: string;
+    profile_photo: string;
 }
 
 let socket: Socket
@@ -34,28 +37,15 @@ export default function Message() {
     const first_name = session?.user?.first_name
     const last_name = session?.user?.last_name
 
-    // useEffect(() => {
-    //     fetch('/api/auth/messages').then((res) => res.json()).then((data) => {
-    //         console.log("Fetched data:", data);
-    //         setMessages(data || []);
-    //         console.log("Messages:", messages);
-    //     }).catch((err) => console.error("Error fetching messages:", err));
-
-    //     socket.on('newMessage', (message) => {
-    //         setMessages((prev) => [...prev, message])
-    //     })
-
-    //     return () => { socket.off('newMessage') }
-    // }, [])
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await fetch('/api/auth/messages')
-                const response = await data.json()
+                const response: { messages: Message[] } = await data.json()
 
                 if (Array.isArray(response.messages)) {
-                    setMessages(response.messages.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)));
+                    setMessages(response.messages.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()));
                 } else {
                     console.error("Unexpected data format:", response);
                 }
@@ -65,21 +55,17 @@ export default function Message() {
             }
         }
         fetchData()
-        
+
         socket.on('newMessage', (message) => {
             setMessages((prev) => [...prev, message])
         })
-        
+
         return () => { socket.off('newMessage') }
     }, [])
 
     const sendMessage = () => {
         socket.emit('sendMessage', { text, userId, first_name, last_name })
         setText('')
-        // if (message.trim()) {
-        //     socket.emit('sendMessage', message)
-        //     setMessage('')
-        // }
     };
 
     // const messageEndRef = useRef(null)
@@ -89,23 +75,58 @@ export default function Message() {
 
     return (
         <>
-            <div className="h-screen w-3/4 flex flex-col">
-                <section className="flex-grow flex flex-col">
-                    <div className="bg-white shadow-md flex-shrink-0">
+            <div className="w-3/4">
+                <section className="flex flex-col">
+                    <div className="bg-white shadow-md">
                         <h3 className="text-lg font-semibold">Чаты</h3>
                         <Search />
                     </div>
-                    <div className="flex-grow min-h-0 box-content overflow-y-auto bg-red-200 p-4">
-                        {messages.map((msg) => (
-                            <div className="grid" key={msg.id}>
-                                <div className={msg.userId.toString() === session?.user?.id ? "text-right" : "text-left"}>
-                                    <strong>{msg.first_name}</strong>
-                                    <p>{msg.text}</p>
-                                </div>
-                            </div>
-                        ))}
+                    <div className="flex flex-row box-content h-[calc(100vh-200px)] w-full p-4">
+                        <div className="w-2/5">
+                            Другие
+                        </div>
+                        <div className="grid gap-3 w-full p-[10px] scroll-smooth overflow-y-auto bg-red-200">
+                            {messages.map((msg) => {
+                                const currentDate = format(msg.createdAt, 'H:mm')
+                                return (
+                                    <div className="inline-block w-full" key={msg.id}>
+                                        <div id="blockRight" className={msg.userId.toString() === session?.user?.id ? "text-right" : "text-left"}>
+                                            <div className={clsx(
+                                                "inline-flex items-end gap-3",
+                                                {
+                                                    "flex-row-reverse": msg.userId.toString() === session?.user?.id
+                                                }
+                                            )}>
+                                                <div className="h-full items-end">
+                                                    <Image
+                                                        className="rounded-full w-[40px] h-[40px]"
+                                                        src={msg.profile_photo ? msg.profile_photo : "/stock.png"}
+                                                        alt=""
+                                                        width={40}
+                                                        height={40}
+                                                    />
+                                                </div>
+                                                <div className={clsx(
+                                                    "relative bg-red-300 rounded-[8px] min-w-[60px] min-h-[60px] gap-2 pl-[8px] pr-[8px] pt-[4px] pb-[4px] text-left",
+                                                )}>
+                                                    <div className="grid gap-2">
+                                                        <strong className="text-[14px]">{msg.first_name}</strong>
+                                                        <div className="flex">
+                                                            <div className="pr-[40px] max-w-[300px]">
+                                                                <p>{msg.text}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <span className="absolute bottom-[2px] right-[8px] text-[12px]">{currentDate}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
-                    <div className="flex items-center gap-2 p-2 bg-white border-t shadow-md flex-shrink-0">
+                    <div className="flex items-center gap-2 p-2 bg-white border-t shadow-md">
                         <input
                             className="flex-grow p-2 border rounded-lg"
                             type="text"

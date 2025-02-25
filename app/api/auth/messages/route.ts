@@ -25,6 +25,7 @@ export async function GET() {
             createdAt: true,
             first_name: true,
             last_name: true,
+            profile_photo: true,
         }
         // include: { users: true },
         // orderBy: { createdAt: 'desc' }
