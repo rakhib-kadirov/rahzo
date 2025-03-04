@@ -4,10 +4,10 @@ import '@/app/ui/global.css'
 import { plusJakarta } from '@/app/ui/fonts'
 import { Metadata } from 'next'
 import QueryProvider from './QueryProvider'
-import React, { useEffect } from 'react'
+import React from 'react'
 import SessionProvider from './ui/SessionProvider'
-import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+// import { useSession } from 'next-auth/react'
+// import { useRouter } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: {
