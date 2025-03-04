@@ -34,6 +34,7 @@ export default function WritePost() {
 
             // setMessage(`Пост опубликован успешно! ID поста: ${result.postId}, ${result.date}`)
             alert(`Пост опубликован успешно!`)
+            window.location.reload()
         }
         catch (error) {
             console.error('Ошибка при публикации:', error)

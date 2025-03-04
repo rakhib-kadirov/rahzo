@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Search from "../search";
-import io from "socket.io-client";
+import io, { Socket } from "socket.io-client";
 import { useSession } from "next-auth/react";
 import clsx from "clsx";
 import Image from "next/image";
@@ -23,7 +23,7 @@ interface Message {
     profile_photo: string;
 }
 
-const socket = io("http://localhost:3001")
+const socket: Socket = io("http://localhost:3001")
 // socket = io("http://26.137.137.103:3001")
 
 interface User {
@@ -89,69 +89,69 @@ export default function Message() {
         <>
             <div className="w-3/4">
                 {/* <section className="flex flex-col"> */}
-                    <div className="flex flex-row box-content h-[calc(100vh-50px)] w-full">
-                        <div className="w-2/5">
-                            <div className="bg-white shadow-md">
-                                <h3 className="text-lg font-semibold">Чаты</h3>
-                                <Search />
-                            </div>
-                            Другие
+                <div className="flex flex-row box-content h-[calc(100vh-50px)] w-full">
+                    <div className="w-2/5">
+                        <div className="bg-white shadow-md">
+                            <h3 className="text-lg font-semibold">Чаты</h3>
+                            <Search />
                         </div>
-                        <div className="grid w-full">
-                            <div className="grid gap-3 p-[10px] scroll-smooth overflow-y-auto bg-red-200">
-                                {messages.map((msg) => {
-                                    const currentDate = format(msg.createdAt, 'H:mm')
-                                    return (
-                                        <div className="inline-block w-full" key={msg.id}>
-                                            <div id="blockRight" className={msg.userId.toString() === session?.user?.id ? "text-right" : "text-left"}>
+                        Другие
+                    </div>
+                    <div className="grid w-full">
+                        <div className="grid gap-3 p-[10px] scroll-smooth overflow-y-auto bg-red-200">
+                            {messages.map((msg) => {
+                                const currentDate = format(msg.createdAt, 'H:mm')
+                                return (
+                                    <div className="inline-block w-full" key={msg.id}>
+                                        <div id="blockRight" className={msg.userId.toString() === session?.user?.id ? "text-right" : "text-left"}>
+                                            <div className={clsx(
+                                                "inline-flex items-end gap-3",
+                                                {
+                                                    "flex-row-reverse": msg.userId.toString() === session?.user?.id
+                                                }
+                                            )}>
+                                                <div className="h-full items-end">
+                                                    <Image
+                                                        className="rounded-full w-[40px] h-[40px]"
+                                                        src={msg.profile_photo ? msg.profile_photo : "/stock.png"}
+                                                        alt=""
+                                                        width={40}
+                                                        height={40}
+                                                    />
+                                                </div>
                                                 <div className={clsx(
-                                                    "inline-flex items-end gap-3",
-                                                    {
-                                                        "flex-row-reverse": msg.userId.toString() === session?.user?.id
-                                                    }
+                                                    "relative bg-red-300 rounded-[8px] min-w-[60px] min-h-[60px] gap-2 pl-[8px] pr-[8px] pt-[4px] pb-[4px] text-left",
                                                 )}>
-                                                    <div className="h-full items-end">
-                                                        <Image
-                                                            className="rounded-full w-[40px] h-[40px]"
-                                                            src={msg.profile_photo ? msg.profile_photo : "/stock.png"}
-                                                            alt=""
-                                                            width={40}
-                                                            height={40}
-                                                        />
-                                                    </div>
-                                                    <div className={clsx(
-                                                        "relative bg-red-300 rounded-[8px] min-w-[60px] min-h-[60px] gap-2 pl-[8px] pr-[8px] pt-[4px] pb-[4px] text-left",
-                                                    )}>
-                                                        <div className="grid gap-2">
-                                                            <strong className="text-[14px]">{msg.first_name}</strong>
-                                                            <div className="flex">
-                                                                <div className="pr-[40px] max-w-[300px]">
-                                                                    <p>{msg.text}</p>
-                                                                </div>
+                                                    <div className="grid gap-2">
+                                                        <strong className="text-[14px]">{msg.first_name}</strong>
+                                                        <div className="flex">
+                                                            <div className="pr-[40px] max-w-[300px]">
+                                                                <p>{msg.text}</p>
                                                             </div>
                                                         </div>
-                                                        <span className="absolute bottom-[2px] right-[8px] text-[12px]">{currentDate}</span>
                                                     </div>
+                                                    <span className="absolute bottom-[2px] right-[8px] text-[12px]">{currentDate}</span>
                                                 </div>
                                             </div>
                                         </div>
-                                    )
-                                })}
-                            </div>
-                            <div className="flex items-center gap-2 p-2 bg-white border-t shadow-md">
-                                <input
-                                    className="flex-grow p-2 border rounded-lg"
-                                    type="text"
-                                    value={text}
-                                    onChange={(e) => setText(e.target.value)}
-                                    placeholder="Напишите сообщение..."
-                                />
-                                <button className="bg-blue-500 text-white px-4 py-2 rounded-lg" onClick={sendMessage}>
-                                    Отправить
-                                </button>
-                            </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        <div className="flex items-center gap-2 p-2 bg-white border-t shadow-md">
+                            <input
+                                className="flex-grow p-2 border rounded-lg"
+                                type="text"
+                                value={text}
+                                onChange={(e) => setText(e.target.value)}
+                                placeholder="Напишите сообщение..."
+                            />
+                            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg" onClick={sendMessage}>
+                                Отправить
+                            </button>
                         </div>
                     </div>
+                </div>
                 {/* </section> */}
             </div>
         </>

@@ -1,11 +1,12 @@
 import NextAuth, { JWT, Session } from "next-auth";
+// import { NextAuthConfig } from "next-auth";
 // import { authConfig } from "./auth.config";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { z } from "zod";
 // import { sql } from "@vercel/postgres";
 import type { User } from '@/app/lib/definitions'
-import bcrypt from 'bcrypt'
-import { db } from '@/app/lib/db'
+import bcrypt from 'bcryptjs'
+import { PrismaClient } from "@prisma/client";
 // import { createSession } from "./app/lib/session";
 // import { redirect } from "next/navigation";
 
@@ -54,18 +55,24 @@ interface CustomUser {
     profile_photo: string;
 }
 
+const prisma = new PrismaClient()
+
 async function getUser(login: string): Promise<User | undefined> {
     try {
         console.log('Login: ', login)
-        const [user] = await db.query(`SELECT * FROM users WHERE login = ?`, [login])
+        const user = await prisma.users.findUnique({
+            where: {
+                login: login
+            }
+        })
         console.log('Fetched user from database: ', user); // Логирование полученного пользователя
 
-        if (!Array.isArray(user) || user.length === 0) {
+        if (!Array.isArray([user]) || [user].length === 0) {
             return undefined;
         }
 
-        console.log('USER: ', user[0])
-        return user[0] as User
+        console.log('USER: ', [user][0])
+        return [user][0] as unknown as User
     } catch (error) {
         console.error('Failed to fetch user: ', error)
         throw new Error('Failed to fetch user.')
@@ -81,7 +88,7 @@ export const authConfig = ({
                 login: { label: "Login", type: "text" },
                 password: { label: "Password", type: "password" },
             },
-            async authorize(credentials) {
+            async authorize(credentials: any) {
                 if (!credentials?.login || !credentials?.password) {
                     throw new Error("Не переданы учетные данные");
                 }
@@ -108,8 +115,9 @@ export const authConfig = ({
                 //     throw new Error('Error.')
                 // }
                 const parsedCredentials = z
-                    .object({ login: z.string().min(3), password: z.string().min(6) })
+                    .object({ login: z.string(), password: z.string().min(6) })
                     .safeParse(credentials);
+                console.log("PARSED CREDENTIALS: ", parsedCredentials)
 
                 if (parsedCredentials.success) {
 
@@ -146,7 +154,7 @@ export const authConfig = ({
             },
         }),
     ],
-    secret: process.env.AUTH_SECRET || "fallback_secret",
+    secret: process.env.NEXTAUTH_SECRET || "fallback_secret",
     session: {
         strategy: 'jwt'
     },
