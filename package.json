@@ -11,7 +11,6 @@
     "@prisma/client": "^6.4.1",
     "@tailwindcss/forms": "^0.5.9",
     "@vercel/postgres": "^0.10.0",
-    "@types/bcrypt": "^5.0.2",
     "autoprefixer": "10.4.20",
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
@@ -44,6 +43,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.8",
     "@types/node": "22.10.1",
     "@types/react": "19.0.0",
