@@ -67,7 +67,7 @@ io.on('connection', (socket) => {
                 last_name,
             },
         })
-
+        
         io.emit('newMessage', { ...message, user })
     })
 
