@@ -2,7 +2,8 @@ const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
 const next = require("next");
-const { PrismaClient } = require('@prisma/client')
+const { PrismaClient } = require('@prisma/client');
+const { readFileSync } = require("fs");
 
 // const dev = process.env.NODE_ENV !== "production";
 // const app = next({ dev });
@@ -40,7 +41,10 @@ const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient()
 const app = express()
-const server = http.createServer(app)
+const server = http.createServer(app, {
+    cert: readFileSync('cert.pem'),
+    // key: readFileSync('path/to/key.pem')
+})
 const io = new Server(server, { cors: { origin: '*' } })
 
 io.on('connection', (socket) => {
