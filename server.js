@@ -42,8 +42,8 @@ const { readFileSync } = require("fs");
 const prisma = new PrismaClient()
 const app = express()
 const server = http.createServer(app, {
-    cert: readFileSync('cert.pem'),
-    // key: readFileSync('path/to/key.pem')
+    cert: readFileSync('ca-cert.pem'),
+    key: readFileSync('ca-key.pem')
 })
 const io = new Server(server, { cors: { origin: '*' } })
 
@@ -74,4 +74,4 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => console.log('Пользователь отключился.'))
 })
 
-server.listen(3001, () => console.log('Сервер WebSocket запущен'))
+server.listen(443, () => console.log('Сервер WebSocket запущен'))
