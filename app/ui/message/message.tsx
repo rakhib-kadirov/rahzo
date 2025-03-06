@@ -23,7 +23,7 @@ interface Message {
     profile_photo: string;
 }
 
-const socket: Socket = io("https://31.130.148.174:443")
+const socket: Socket = io("wss://31.130.148.174:443")
 // socket = io("http://26.137.137.103:3001")
 
 interface User {
