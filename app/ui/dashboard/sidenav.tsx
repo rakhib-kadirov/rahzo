@@ -7,6 +7,7 @@ import { ArrowRightStartOnRectangleIcon } from '@heroicons/react/24/outline';
 import Search from '@/app/ui/search'
 import { serverSignOut } from '@/app/lib/actions';
 import { useSession } from 'next-auth/react';
+import { Suspense } from 'react';
 
 interface User {
   id: string;
@@ -30,7 +31,9 @@ export default function SideNav() {
         </div>
       </Link>
       <div className='flex py-8'>
-        <Search />
+        <Suspense fallback={<div>Загрузка...</div>}>
+          <Search />
+        </Suspense>
       </div>
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <NavLinks />

@@ -5,6 +5,7 @@ import {
   // CustomersTableType,
   FormattedCustomersTable,
 } from '@/app/lib/definitions';
+import { Suspense } from 'react';
 
 export default async function CustomersTable({
   customers,
@@ -16,7 +17,9 @@ export default async function CustomersTable({
       <h1 className={`${lusitana.className} mb-8 text-xl md:text-2xl`}>
         Customers
       </h1>
-      <Search />
+      <Suspense fallback={<div>Загрузка...</div>}>
+        <Search />
+      </Suspense>
       <div className="mt-6 flow-root">
         <div className="overflow-x-auto">
           <div className="inline-block min-w-full align-middle">

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Search from "../search";
 import io, { Socket } from "socket.io-client";
 import { useSession } from "next-auth/react";
@@ -93,7 +93,9 @@ export default function Message() {
                     <div className="w-2/5">
                         <div className="bg-white shadow-md">
                             <h3 className="text-lg font-semibold">Чаты</h3>
-                            <Search />
+                            <Suspense fallback={<div>Загрузка...</div>}>
+                                <Search />
+                            </Suspense>
                         </div>
                         Другие
                     </div>
