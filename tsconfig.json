@@ -12,6 +12,7 @@
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
@@ -37,7 +38,7 @@
     ".next/types/**/*.ts",
     "app/lib/placeholder-data.ts",
     "scripts/seed.js"
-, "server.js"  ],
+, "server.js", "app/api/auth/[...nextauth].js", "auth.js", "auth.config.js", "app/lib/actions.js", "middleware.ts"  ],
   "exclude": [
     "node_modules"
   ]
