@@ -4,7 +4,7 @@
 import { db } from "@/app/lib/db";
 // import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
-import bcrypt from "bcryptjs"
+import bcrypt from "@node-rs/bcrypt"
 import { serialize } from "cookie";
 import jwt from "jsonwebtoken";
 

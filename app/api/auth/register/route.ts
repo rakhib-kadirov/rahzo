@@ -2,7 +2,7 @@
 // import { db } from "@/app/lib/db";
 // import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
-import bcrypt from "bcrypt"
+import bcrypt from "@node-rs/bcrypt"
 import { PrismaClient } from "@prisma/client";
 import { auth } from "@/auth";
 
