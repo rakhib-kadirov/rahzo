@@ -23,7 +23,7 @@ interface Message {
     profile_photo: string;
 }
 
-const socket: Socket = io("wss://95.163.231.25:443")
+const socket: Socket = io("wss://95.163.231.25:443", { path: "/socket.io/" })
 // const socket: Socket = io("wss://testrahzo.vercel.app", { path: "/socket.io/", transports: ["websocket"] })
 // socket = io("http://26.137.137.103:3001")
 
