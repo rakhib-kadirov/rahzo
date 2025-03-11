@@ -37,7 +37,8 @@ const { readFileSync } = require("fs");
 //     });
 // });
 
-
+// /etc/ssl/private.key
+// /etc/ssl/chain.crt
 
 const prisma = new PrismaClient()
 const app = express()
