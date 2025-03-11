@@ -24,7 +24,7 @@ interface Message {
 }
 
 // const socket: Socket = io("wss://node.rahzo.ru:443")
-const socket: Socket = io("wss://node.rahzo.ru:443", { path: "/socket.io/", transports: ["websocket"] })
+const socket: Socket = io("wss://node.rahzo.ru:443", { path: "/socket.io/" })
 // socket = io("http://26.137.137.103:3001")
 
 interface User {
