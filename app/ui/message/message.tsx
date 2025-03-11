@@ -88,10 +88,10 @@ export default function Message() {
 
     return (
         <>
-            <div className="w-3/4">
+            <div className="w-3/4 md:w-full">
                 {/* <section className="flex flex-col"> */}
-                <div className="flex flex-row box-content h-[calc(100vh-50px)] w-full">
-                    <div className="w-2/5">
+                <div className="flex flex-row box-content h-[calc(100vh-50px)] md:px-6">
+                    <div className="w-2/5 md:hidden">
                         <div className="bg-white shadow-md">
                             <h3 className="text-lg font-semibold">Чаты</h3>
                             <Suspense fallback={<div>Загрузка...</div>}>
@@ -141,7 +141,7 @@ export default function Message() {
                                 )
                             })}
                         </div>
-                        <div className="flex items-center gap-2 p-2 bg-white border-t shadow-md">
+                        <div className="flex items-center gap-2 p-2 bg-white border-t shadow-md md:mb-[36px]">
                             <input
                                 className="flex-grow p-2 border rounded-lg"
                                 type="text"

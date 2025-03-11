@@ -87,7 +87,7 @@ export default function NavLinksRight() {
         <Link
           href='/dashboard/posts'
           className={clsx(
-            "h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 w-auto text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
+            "h-[48px] grow items-center justify-center gap-2 rounded-md p-3 w-auto text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
             {
               "bg-sky-100 text-blue-600": pathname === links[0].href
             }
@@ -100,7 +100,7 @@ export default function NavLinksRight() {
         <Link
           href={links[1].href}
           className={clsx(
-            "h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 w-auto text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
+            "h-[48px] grow items-center justify-center gap-2 rounded-md p-3 w-auto text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
             {
               "bg-sky-100 text-blue-600": pathname === links[1].href
             }

@@ -38,7 +38,7 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
     const { text, userId, first_name, last_name } = await req.json()
-
+    const dateNow = new Date(Date.now())
     const user = await prisma.users.findUnique({
         where: {
             id: userId,
@@ -49,7 +49,13 @@ export async function POST(req: NextRequest) {
     }
 
     const message = await prisma.message.create({
-        data: { text, userId, first_name, last_name }
+        data: { 
+            text, 
+            userId, 
+            createdAt: dateNow, 
+            first_name, 
+            last_name 
+        }
     })
     return NextResponse.json(message)
 }

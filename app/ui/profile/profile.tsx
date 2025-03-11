@@ -60,7 +60,7 @@ export default function Profile() {
             {users.map((user) => {
                 return (
                     <main key={user.id} className="grid gap-3">
-                        <main className="flex w-3/4 items-center rounded-md bg-gray-50 p-3 text-sm font-medium md:flex-none md:p-2 md:px-3">
+                        <main className="flex w-3/4 items-center rounded-md bg-gray-100 p-3 text-sm font-medium md:flex-none md:p-2 md:px-3">
                             {/* <span>{session?.user?.id},    {user.id}</span> */}
                             <div className="flex w-full justify-between items-center">
                                 <div className="flex items-center gap-6">
@@ -93,13 +93,13 @@ export default function Profile() {
                             </div>
                         </main>
                         {userSession?.id.toString() === user.id.toString() ? (
-                            <main className="flex w-3/4 items-center rounded-md bg-gray-50 p-3 text-sm font-medium md:flex-none md:p-2 md:px-3">
+                            <main className="flex w-3/4 items-center rounded-md bg-gray-100 p-3 text-sm font-medium md:flex-none md:p-2 md:px-3">
                                 <WritePost />
                             </main>
                         ) : (
                             ''
                         )}
-                        <main className="grid gap-4 w-3/4 items-center rounded-md bg-gray-50 p-3 text-sm font-medium md:flex-none md:p-2 md:px-3">
+                        <main className="grid gap-4 w-3/4 items-center rounded-md bg-gray-100 p-3 text-sm font-medium md:flex-none md:p-2 md:px-3">
                             {posts.map((post) => {
                                 const currentDate = format(post.date, 'H:mm, d.M.yyyy')
                                 return (

@@ -24,7 +24,7 @@ export default async function Page() {
     // } = await fetchCardData();
     return (
         <main className='flex'>
-            <div className='w-2/3'>
+            <div className='w-2/3 md:w-full md:px-6 md:mb-[20px]'>
                 <div className="grid gap-1 sm:grid-cols-2 lg:grid-cols-2">
                     {/* <Suspense fallback={<CardSkeleton />}>
                         <CardWrapper />
@@ -38,7 +38,7 @@ export default async function Page() {
                     <Posts />
                 </div>
             </div>
-            <div className='w-1/3'>
+            <div className='w-1/3 md:hidden'>
                 <NavLinksRight />
             </div>
         </main>

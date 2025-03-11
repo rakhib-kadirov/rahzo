@@ -42,8 +42,8 @@ const { readFileSync } = require("fs");
 const prisma = new PrismaClient()
 const app = express()
 const server = http.createServer(app, {
+    key: readFileSync('ca-key.pem'),
     cert: readFileSync('ca-cert.pem'),
-    key: readFileSync('ca-key.pem')
 })
 const io = new Server(server, { cors: { origin: '*' } })
 
