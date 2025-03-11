@@ -24,8 +24,8 @@ interface Message {
     profile_photo: string;
 }
 
-// const socket: Socket = io("wss://node.rahzo.ru:443")
-const socket: Socket = io("wss://node.rahzo.ru:443", { path: "/socket.io/", extraHeaders: { origin: 'Access-Control-Allow-Origin' } })
+const socket: Socket = io("wss://node.rahzo.ru:443")
+// const socket: Socket = io("wss://node.rahzo.ru:443", { path: "/socket.io/", extraHeaders: { origin: 'Access-Control-Allow-Origin' } })
 // socket = io("http://26.137.137.103:3001")
 
 interface User {
