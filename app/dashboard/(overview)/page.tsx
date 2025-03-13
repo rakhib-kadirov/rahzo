@@ -38,7 +38,7 @@ export default async function Page() {
                     <Posts />
                 </div>
             </div>
-            <div className='w-1/3 md:hidden'>
+            <div className='w-1/3 md:hidden lg:block'>
                 <NavLinksRight />
             </div>
         </main>

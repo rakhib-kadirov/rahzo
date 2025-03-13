@@ -35,16 +35,18 @@ export default function SideNav() {
           <Search />
         </Suspense>
       </div>
-      <div className="flex grow flex-row justify-between space-x-2 md:w-[40%] md:m-auto md:rounded-[8px] md:space-x-0 max-lg:bg-white">
+      {/* <div className="max-lg:flex max-lg:grow max-lg:flex-row justify-between space-x-2 md:w-[40%] md:m-auto lg:m-0 lg:w-full md:rounded-[8px] md:space-x-0 max-lg:bg-white"> */}
+      <div className="flex grow flex-row justify-between space-x-2 md:w-[40%] md:m-auto lg:m-0 lg:w-full md:rounded-[8px] lg:flex-col md:space-x-0 md:space-y-2 max-lg:bg-white">
         <NavLinks />
-        <div className="hidden h-auto w-full grow rounded-md bg-gray-100 md:hidden md:block"></div>
+        <div className="max-md:hidden lg:block lg:h-full lg:w-full lg:grow lg:m-auto rounded-md bg-gray-100">Реклама</div>
+        <div className="max-md:hidden lg:block lg:h-full lg:w-full lg:grow lg:m-auto rounded-md bg-gray-100"></div>
         <form
           action={async () => {
             await serverSignOut(); // Вызов серверной функции
           }}
         >
           <button className="flex h-[48px] w-full grow items-center justify-between gap-2 rounded-md bg-gray-100 p-3 text-sm font-medium max-lg:bg-white hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
-            <div className="hidden md:hidden md:block">
+            <div className="hidden md:hidden md:block lg:block">
               <p>{user?.first_name}</p>
             </div>
             <ArrowRightStartOnRectangleIcon className="w-6" />

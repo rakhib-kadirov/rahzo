@@ -133,6 +133,7 @@ export default function NavLinksRight() {
       <div>
         <Friends />
       </div>
+      <div className="max-md:hidden lg:block lg:h-full lg:w-full lg:grow lg:m-auto rounded-md bg-gray-100">Реклама</div>
     </div>
   );
 }
