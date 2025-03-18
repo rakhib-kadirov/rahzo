@@ -1,6 +1,6 @@
 'use client'
 
-import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Search from "../search";
 import io, { Socket } from "socket.io-client";
 import { useSession } from "next-auth/react";
@@ -8,12 +8,12 @@ import clsx from "clsx";
 import Image from "next/image";
 import { format } from "date-fns"
 import '../global.css'
-import { PrismaClient } from "@prisma/client";
-import { useRouter } from "next/router";
+// import { PrismaClient } from "@prisma/client";
+// import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
+// import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
-const prisma = new PrismaClient()
+// const prisma = new PrismaClient()
 
 // const socket = io('http://localhost:3001', {
 //     path: '/api/socket.io',

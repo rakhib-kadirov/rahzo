@@ -4,9 +4,9 @@ import { Suspense } from "react";
 export default function Page() {
     return (
         <>
-            <Suspense>
+            {/* <Suspense> */}
                 <Message />
-            </Suspense>
+            {/* </Suspense> */}
         </>
     )
 }
