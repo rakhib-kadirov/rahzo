@@ -30,8 +30,9 @@ interface Message {
     profile_photo: string;
 }
 
+// extraHeaders: { origin: 'Access-Control-Allow-Origin' }
 // const socket: Socket = io("ws://localhost:3001/")
-const socket: Socket = io("wss://node.rahzo.ru:443", { path: "/socket.io/", extraHeaders: { origin: 'Access-Control-Allow-Origin' }, timeout: 10000, reconnectionAttempts: 5, reconnectionDelay: 2000 })
+const socket: Socket = io("wss://node.rahzo.ru:443", { path: "/socket.io/", timeout: 10000, reconnectionAttempts: 5, reconnectionDelay: 2000 })
 // socket = io("http://26.137.137.103:3001")
 
 interface User {
