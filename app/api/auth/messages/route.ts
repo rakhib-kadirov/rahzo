@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
                 first_name: session?.user?.first_name,
                 last_name: session?.user?.last_name,
             },
-            chatId: chatId
+            // chatId: chatId
         },
         orderBy: {
             createdAt: 'desc'
