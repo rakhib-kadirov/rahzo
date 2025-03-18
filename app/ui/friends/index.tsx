@@ -2,6 +2,11 @@ import Image from 'next/image'
 // import { fetchFilteredInvoices } from '@/app/lib/data';
 import { useEffect, useState } from 'react';
 import { plusJakarta } from '@/app/ui/fonts'
+import {
+    ChatBubbleOvalLeftIcon,
+} from '@heroicons/react/24/outline';
+import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 // const friends = [
 //     {
@@ -35,12 +40,18 @@ const truncateText = (text: string, maxLength: number) => {
 }
 
 export default function Friends() {
+    const LinkIcon = ChatBubbleOvalLeftIcon;
     const [users, setUsers] = useState<User[]>([])
+
+    // const searchParams = useSearchParams()
+    // const otherUserId = searchParams.get('otherUserId');
+    const { data: session } = useSession()
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await fetch('/api/auth/users')
-                const response = await data.json()
+                const response: { users: User[] } = await data.json()
 
                 if (Array.isArray(response.users)) {
                     setUsers(response.users);
@@ -70,11 +81,18 @@ export default function Friends() {
                                     alt='profile picture'
                                 />
                             </div>
-                            <div className='grid'>
-                                <div className='flex'>
-                                    <p className="flex text-sm font-semibold text-gray-700">{user.first_name} {truncateText(user.last_name, 10)}</p>
+                            <div className='flex justify-between w-full'>
+                                <div className='grid'>
+                                    <div className='flex'>
+                                        <p className="flex text-sm font-semibold text-gray-700">{user.first_name} {truncateText(user.last_name, 10)}</p>
+                                    </div>
+                                    <p className="text-[14px] text-[#475569]">{user.login.toLowerCase()}</p>
                                 </div>
-                                <p className="text-[14px] text-[#475569]">{user.login.toLowerCase()}</p>
+                                <div className='flex items-center'>
+                                    <Link href={`/dashboard/message?otherUserId=${user.id}&currentUserId=${session?.user?.id}`}>
+                                        <LinkIcon className='w-6 stroke-gray-500 hover:fill-sky-500 hover:stroke-sky-500' />
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     )

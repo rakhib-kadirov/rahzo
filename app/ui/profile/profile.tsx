@@ -37,23 +37,23 @@ export default function Profile() {
         fetchData()
     }, [id]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await fetch(`/api/auth/user/${id}/userProfilePosts`)
-                const response = await data.json()
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const data = await fetch(`/api/auth/user/${id}/userProfilePosts`)
+    //             const response = await data.json()
 
-                if (Array.isArray(response.posts)) {
-                    setPosts(response.posts);
-                } else {
-                    console.error("Unexpected data format:", response);
-                }
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        fetchData()
-    }, [id]);
+    //             if (Array.isArray(response.posts)) {
+    //                 setPosts(response.posts);
+    //             } else {
+    //                 console.error("Unexpected data format:", response);
+    //             }
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     }
+    //     fetchData()
+    // }, [id]);
 
     return (
         <>

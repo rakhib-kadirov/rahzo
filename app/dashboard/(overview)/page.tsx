@@ -25,7 +25,7 @@ export default async function Page() {
     return (
         <main className='flex'>
             <div className='w-2/3 md:w-full md:px-6 md:mb-[20px]'>
-                <div className="grid gap-1 sm:grid-cols-2 lg:grid-cols-2">
+                <div className="grid gap-1 max-sm:hidden sm:grid-cols-2 lg:grid-cols-2">
                     {/* <Suspense fallback={<CardSkeleton />}>
                         <CardWrapper />
                     </Suspense> */}

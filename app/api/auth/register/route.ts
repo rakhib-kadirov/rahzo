@@ -11,7 +11,7 @@ const prisma = new PrismaClient()
 export async function POST(request: Request) {
     const session = await auth()
     try {
-        const { login, password, first_name, last_name }: { login: string, password: string, first_name: string, last_name: string } = await request.json()
+        const { login, password, first_name, last_name, chatId }: { login: string, password: string, first_name: string, last_name: string, chatId: number } = await request.json()
 
         if (!login || !password || password.length < 6) {
             console.error("Ошибка: Некорректные данные для регистрации.")
