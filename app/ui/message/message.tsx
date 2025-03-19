@@ -140,7 +140,9 @@ export default function Message() {
     }, [])
 
     const sendMessage = () => {
-        socket.emit('sendMessage', { text, currentUserId, first_name, last_name, otherUserId })
+        const chatId = Array.isArray(chats) ? chats : [chats]
+        console.log('CHAT_ID_TEST: ', chatId)
+        socket.emit('sendMessage', { text, currentUserId, chatId, first_name, last_name, otherUserId })
         setText('')
     }
 
