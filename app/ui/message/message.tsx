@@ -103,6 +103,12 @@ export default function Message() {
             setChats(data.chat)
         }
         fetchData()
+        
+        socket.on('newMessage', (message) => {
+            console.log("Получено новое сообщение:", message)
+            setChats((prev) => [...prev, message])
+        })
+
     }, [otherUserId, currentUserId])
     console.log('CHATS: ', chats)
 
@@ -125,10 +131,10 @@ export default function Message() {
         }
         fetchData()
 
-        socket.on('newMessage', (message) => {
-            console.log("Получено новое сообщение:", message)
-            setMessages((prev) => [...prev, message])
-        })
+        // socket.on('newMessage', (message) => {
+        //     console.log("Получено новое сообщение:", message)
+        //     setMessages((prev) => [...prev, message])
+        // })
 
         return () => { socket.off('newMessage') }
     }, [])
