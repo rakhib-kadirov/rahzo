@@ -103,11 +103,6 @@ export default function Message() {
             setChats(data.chat)
         }
         fetchData()
-
-        socket.on('newMessage', (message) => {
-            setMessages((prev) => [...prev, message])
-        })
-        
     }, [otherUserId, currentUserId])
     console.log('CHATS: ', chats)
 
@@ -131,6 +126,7 @@ export default function Message() {
         fetchData()
 
         socket.on('newMessage', (message) => {
+            console.log("Получено новое сообщение:", message)
             setMessages((prev) => [...prev, message])
         })
 
@@ -187,21 +183,22 @@ export default function Message() {
                     </div>
                     <div className="grid w-full">
                         {chats.map((Chat) => {
+                            const messagesArray = Array.isArray(Chat.message) ? Chat.message : [Chat.message];
                             // console.log('userId: ', Chat.message.userId)
                             return (
                                 <div key={Chat.id} className="grid gap-3 p-[10px] scroll-smooth overflow-y-auto bg-red-200 chat-container">
                                     {/* {messages.map((msg) => {return (<div></div>)})} */}
                                     <div className="inline-block w-full ">
-                                        {(Array.isArray(Chat.message) ? Chat.message : []).map((chat: { id: number; text: string; userId: number; createdAt: string; first_name: string; last_name: string; profile_photo: string; }) => {
+                                        {messagesArray.map((chat) => {
                                             const currentDate = format(new Date(chat.createdAt), 'H:mm')
-                                            console.log('USER_ID_CHAT_MSG: ', chat.userId)
+                                            // console.log('USER_ID_CHAT_MSG: ', chat.userId)
                                             return (
-                                                <div key={chat.id}>
-                                                    <div id="blockRight" className={chat.userId.toString() === session?.user?.id ? "text-right" : "text-left"}>
+                                                <div key={Chat.message.id}>
+                                                    <div id="blockRight" className={chat.userId?.toString() === session?.user?.id ? "text-right" : "text-left"}>
                                                         <div className={clsx(
                                                             "inline-flex items-end gap-3",
                                                             {
-                                                                "flex-row-reverse": chat.userId.toString() === session?.user?.id
+                                                                "flex-row-reverse": chat.userId?.toString() === session?.user?.id
                                                             }
                                                         )}>
                                                             <div className="h-full items-end">
