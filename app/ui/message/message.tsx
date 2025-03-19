@@ -106,7 +106,7 @@ export default function Message() {
         
         socket.on('newMessage', (message) => {
             console.log("Получено новое сообщение:", message)
-            setChats((prev) => [...prev, message])
+            setMessages((prev) => [...prev, message])
         })
 
     }, [otherUserId, currentUserId])
