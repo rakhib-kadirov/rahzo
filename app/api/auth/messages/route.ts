@@ -10,34 +10,38 @@ export async function GET(req: NextRequest) {
     const url = new URL(req.url);
     const chatId = Number(url.searchParams.get("chatId"));
 
-    const messages = await prisma.message.findMany({
-        where: {
-            users: {
-                first_name: session?.user?.first_name,
-                last_name: session?.user?.last_name,
+    try {
+        const messages = await prisma.message.findMany({
+            where: {
+                users: {
+                    first_name: session?.user?.first_name,
+                    last_name: session?.user?.last_name,
+                },
+                // chatId: chatId
             },
-            // chatId: chatId
-        },
-        orderBy: {
-            createdAt: 'desc'
-        },
-        select: {
-            id: true,
-            userId: true,
-            text: true,
-            createdAt: true,
-            first_name: true,
-            last_name: true,
-            profile_photo: true,
-        }
-        // include: { users: true },
-        // orderBy: { createdAt: 'desc' }
-    })
+            orderBy: {
+                createdAt: 'desc'
+            },
+            select: {
+                id: true,
+                userId: true,
+                text: true,
+                createdAt: true,
+                first_name: true,
+                last_name: true,
+                profile_photo: true,
+            }
+            // include: { users: true },
+            // orderBy: { createdAt: 'desc' }
+        })
 
-    return NextResponse.json({ messages }, {
-        status: 200,
-        headers: { "Content-Type": "application/json" }
-    })
+        return NextResponse.json({ success: true, messages }, {
+            status: 200,
+            headers: { "Content-Type": "application/json" }
+        })
+    } catch (error) {
+        return NextResponse.json({ error: 'Message Error' }, { status: 400 });
+    }
 }
 
 export async function POST(req: NextRequest) {
@@ -53,11 +57,11 @@ export async function POST(req: NextRequest) {
     }
 
     const message = await prisma.message.create({
-        data: { 
-            text, 
-            userId, 
-            createdAt: dateNow, 
-            first_name, 
+        data: {
+            text,
+            userId,
+            createdAt: dateNow,
+            first_name,
             last_name,
             users,
             chat,

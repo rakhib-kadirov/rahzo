@@ -103,6 +103,11 @@ export default function Message() {
             setChats(data.chat)
         }
         fetchData()
+
+        socket.on('newMessage', (message) => {
+            setMessages((prev) => [...prev, message])
+        })
+        
     }, [otherUserId, currentUserId])
     console.log('CHATS: ', chats)
 

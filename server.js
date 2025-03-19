@@ -9,6 +9,10 @@ const app = express()
 const server = http.createServer(app)
 const io = new Server(server, { cors: { origin: '*' } })
 
+// TypeError: Cannot read properties of undefined (reading 'findFirst')
+// 0|server  |     at Socket.<anonymous> (/root/server.js:29:43)
+
+
 io.on('connection', (socket) => {
     console.log('Пользователь подключился: ', socket.id)
 
