@@ -143,24 +143,21 @@ export default function Message() {
         return () => { socket.off('newMessage') }
     }, [])
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await fetch('/api/auth/chatParticipants')
-                const response: { chats: Chat[] } = await data.json()
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const data = await fetch('/api/auth/chatParticipants')
+    //             const response: { chats: Chat[] } = await data.json()
 
-                if (Array.isArray(response.chats)) {
-                    setChatParticipants(response.chats);
-                } else {
-                    console.error("Unexpected data format:", response);
-                }
-
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        fetchData()
-    }, [])
+    //             console.log("Чаты из чатов: ", response.chats);
+    //             setChatParticipants(response.chats);
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     }
+    //     fetchData()
+    // }, [])
+    // console.log('chatParticipants', chatParticipants)
 
     const sendMessage = () => {
         socket.emit('sendMessage', { text, currentUserId, first_name, last_name, otherUserId })
@@ -179,30 +176,10 @@ export default function Message() {
                                 <Search />
                             </Suspense>
                         </div>
-
-                        {chatParticipants.map(chat => {
-                            const messagesArray = Array.isArray(chat.message) ? chat.message : [chat.message];
-                            return (
-                                <div>
-                                    <span>{chat.participants?.user?.first_name} {chat.participants?.user?.last_name}</span>
-                                    <div>
-                                        {/* {messagesArray.length > 0 && (
-                                            <div className="flex">
-                                                <div className="pr-[40px] max-w-[300px]">
-                                                    <p>{messagesArray[messagesArray.length - 1]?.text}</p>
-                                                </div>
-                                            </div>
-                                        )} */}
-                                    </div>
-                                </div>
-                            )
-                        })}
-
                         Другие
                         {chats.map((Chat) => {
                             const participantsArray = Array.isArray(Chat.participants) ? Chat.participants : [Chat.participants];
                             const messagesArray = Array.isArray(Chat.message) ? Chat.message : [Chat.message];
-                            const currentDate = format(new Date(Chat.createdAt), 'H:mm')
                             return (
                                 <div>
                                     {/* key={Chat.message.id} */}
@@ -223,7 +200,9 @@ export default function Message() {
                                             )}
                                         </div>
                                         <span className="absolute bottom-[2px] right-[8px] text-[12px]">
-                                            {currentDate}
+                                            {messagesArray.length > 0 && (
+                                                <p>{format(new Date(messagesArray[messagesArray.length - 1]?.createdAt), 'H:mm')}</p>
+                                            )}
                                         </span>
                                     </div>
                                 </div>

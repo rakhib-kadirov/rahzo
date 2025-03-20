@@ -7,7 +7,10 @@ const prisma = new PrismaClient();
 export async function GET() {
     try {
         let chats = await prisma.chat.findMany({
-            include: { participants: { include: { user: { include: { message: true } } } } }
+            include: {
+                participants: { include: { user: { include: { message: true } } } },
+                message: true
+            }
         });
         console.log('CHATS_PART: ', chats)
 
