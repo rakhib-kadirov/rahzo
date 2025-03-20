@@ -44,7 +44,11 @@ interface User {
 interface Message {
     id: number;
     text: string;
+    userId: number;
     createdAt: string;
+    first_name: string;
+    last_name: string;
+    profile_photo: string;
 }
 
 interface Chat {
@@ -63,15 +67,7 @@ interface Chat {
             profile_photo: string;
         }
     };
-    message: {
-        id: number;
-        text: string[];
-        userId: number;
-        createdAt: string;
-        first_name: string;
-        last_name: string;
-        profile_photo: string;
-    }
+    message: Message[]
 }
 
 export default function Message() {
@@ -110,7 +106,7 @@ export default function Message() {
             setChats((prevChats) =>
                 prevChats.map((chat) =>
                     chat.id === message.chatId
-                        ? { ...chat, message: chat.message }
+                        ? { ...chat, message: [...(Array.isArray(chat.message) ? chat.message : [chat.message]), message] }
                         : chat
                 )
             );
@@ -169,7 +165,8 @@ export default function Message() {
                             const messagesArray = Array.isArray(Chat.message) ? Chat.message : [Chat.message];
                             const currentDate = format(new Date(Chat.createdAt), 'H:mm')
                             return (
-                                <div key={Chat.message.id}>
+                                <div>
+                                    {/* key={Chat.message.id} */}
                                     <div className={clsx(
                                         "relative bg-red-300 rounded-[8px] min-w-[60px] min-h-[60px] gap-2 pl-[8px] pr-[8px] pt-[4px] pb-[4px] text-left",
                                     )}>
@@ -206,7 +203,8 @@ export default function Message() {
                                             const currentDate = format(new Date(chat.createdAt), 'H:mm')
                                             // console.log('USER_ID_CHAT_MSG: ', chat.userId)
                                             return (
-                                                <div key={Chat.message.id}>
+                                                <div>
+                                                    {/* key={Chat.message.id} */}
                                                     <div id="blockRight" className={chat.userId?.toString() === session?.user?.id ? "text-right" : "text-left"}>
                                                         <div className={clsx(
                                                             "inline-flex items-end gap-3",
