@@ -110,7 +110,7 @@ export default function Message() {
             setChats((prevChats) =>
                 prevChats.map((chat) =>
                     chat.id === message.chatId
-                        ? { ...chat, messages: Array.isArray(chat.message) ? [...chat.message, message] : [chat.message, message] }
+                        ? { ...chat, message }
                         : chat
                 )
             );
