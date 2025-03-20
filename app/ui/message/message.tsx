@@ -103,10 +103,17 @@ export default function Message() {
             setChats(data.chat)
         }
         fetchData()
-        
+
         socket.on('newMessage', (message) => {
             console.log("Получено новое сообщение:", message)
             setMessages((prev) => [...prev, message])
+            setChats((prevChats) =>
+                prevChats.map((chat) =>
+                    chat.id === message.chatId
+                        ? { ...chat, messages: Array.isArray(chat.message) ? [...chat.message, message] : [chat.message, message] }
+                        : chat
+                )
+            );
         })
 
     }, [otherUserId, currentUserId])
