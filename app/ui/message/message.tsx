@@ -184,7 +184,7 @@ export default function Message() {
                             const messagesArray = Array.isArray(chat.message) ? chat.message : [chat.message];
                             return (
                                 <div>
-                                    <span>{chat.participants.user.first_name} {chat.participants.user.last_name}</span>
+                                    <span>{chat.participants?.user?.first_name} {chat.participants?.user?.last_name}</span>
                                     <div>
                                         {/* {messagesArray.length > 0 && (
                                             <div className="flex">
