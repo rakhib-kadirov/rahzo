@@ -6,7 +6,6 @@ const prisma = new PrismaClient();
 
 export async function GET() {
     try {
-        // 1️ Ищем существующий чат между пользователями
         let chats = await prisma.chat.findMany({
             include: { participants: { include: { user: { include: { message: true } } } } }
         });

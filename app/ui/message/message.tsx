@@ -147,10 +147,10 @@ export default function Message() {
         const fetchData = async () => {
             try {
                 const data = await fetch('/api/auth/chatParticipants')
-                const response: { chats: Chat[] } = await data.json()
+                const response = await data.json()
 
-                if (Array.isArray(response.chats)) {
-                    setChatParticipants(response.chats);
+                if (Array.isArray(response)) {
+                    setChatParticipants(response);
                 } else {
                     console.error("Unexpected data format:", response);
                 }
