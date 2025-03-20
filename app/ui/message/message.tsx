@@ -149,11 +149,11 @@ export default function Message() {
                 const data = await fetch('/api/auth/chatParticipants')
                 const response = await data.json()
 
-                if (Array.isArray(response)) {
+                // if (Array.isArray(response)) {
                     setChatParticipants(response);
-                } else {
-                    console.error("Unexpected data format:", response);
-                }
+                // } else {
+                //     console.error("Unexpected data format:", response);
+                // }
 
             } catch (error) {
                 console.log(error)
