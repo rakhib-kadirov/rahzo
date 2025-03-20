@@ -147,13 +147,13 @@ export default function Message() {
         const fetchData = async () => {
             try {
                 const data = await fetch('/api/auth/chatParticipants')
-                const response = await data.json()
+                const response: { chats: Chat[] } = await data.json()
 
-                // if (Array.isArray(response)) {
-                    setChatParticipants(response);
-                // } else {
-                //     console.error("Unexpected data format:", response);
-                // }
+                if (Array.isArray(response.chats)) {
+                    setChatParticipants(response.chats);
+                } else {
+                    console.error("Unexpected data format:", response);
+                }
 
             } catch (error) {
                 console.log(error)
@@ -186,13 +186,13 @@ export default function Message() {
                                 <div>
                                     <span>{chat.participants.user.first_name} {chat.participants.user.last_name}</span>
                                     <div>
-                                        {messagesArray.length > 0 && (
+                                        {/* {messagesArray.length > 0 && (
                                             <div className="flex">
                                                 <div className="pr-[40px] max-w-[300px]">
                                                     <p>{messagesArray[messagesArray.length - 1]?.text}</p>
                                                 </div>
                                             </div>
-                                        )}
+                                        )} */}
                                     </div>
                                 </div>
                             )
