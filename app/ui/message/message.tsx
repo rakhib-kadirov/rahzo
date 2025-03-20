@@ -110,7 +110,7 @@ export default function Message() {
             setChats((prevChats) =>
                 prevChats.map((chat) =>
                     chat.id === message.chatId
-                        ? { ...chat, message: chat.message ? [chat.message, message] : message }
+                        ? { ...chat, message }
                         : chat
                 )
             );
