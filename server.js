@@ -50,7 +50,7 @@ io.on('connection', (socket) => {
         })
         console.log("Отправка сообщения в чат V_2: ", message.chatId);
 
-        io.emit('newMessage', { ...message, user })
+        io.to(message.chatId).emit('newMessage', { ...message, user })
     })
 
     socket.on('disconnect', () => console.log('Пользователь отключился.'))
