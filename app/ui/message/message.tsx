@@ -133,13 +133,13 @@ export default function Message() {
             }
 
             const data: { chat: Chat[] } = await response.json()
-            console.log("Чаты: ", data.chat)
+            // console.log("Чаты: ", data.chat)
             setChats(data.chat)
         }
         fetchData()
 
         socket.on('newMessage', (message) => {
-            console.log("Получено новое сообщение:", message)
+            // console.log("Получено новое сообщение:", message)
             setMessages((prev) => [...prev, message])
             setChats((prevChats) =>
                 prevChats.map((chat) =>
@@ -151,7 +151,7 @@ export default function Message() {
         })
 
     }, [otherUserId, currentUserId])
-    console.log('CHATS: ', chats)
+    // console.log('CHATS: ', chats)
 
 
     // useEffect(() => {
@@ -186,7 +186,7 @@ export default function Message() {
                 const data = await fetch('/api/auth/chatParticipants')
                 const response: { chats: ChatParticipants[] } = await data.json()
 
-                console.log("Чаты из чатов: ", response.chats.flat());
+                // console.log("Чаты из чатов: ", response.chats.flat());
                 setChatParticipants(response.chats.flat());
             } catch (error) {
                 console.log(error)
@@ -194,7 +194,7 @@ export default function Message() {
         }
         fetchData()
     }, [])
-    console.log('chatParticipants', chatParticipants)
+    // console.log('chatParticipants', chatParticipants)
 
     const sendMessage = () => {
         socket.emit('sendMessage', { text, currentUserId, first_name, last_name, otherUserId })
@@ -216,7 +216,7 @@ export default function Message() {
                         <div className="grid gap-2">
                             {chatParticipants.map((chat) => {
                                 // const participantsArray = Array.isArray(chat.chat.participants) ? chat.chat.participants : [chat.chat.participants];
-                                console.log('UI_CHAT_PART: ', chat.chat.participants)
+                                // console.log('UI_CHAT_PART: ', chat.chat.participants)
                                 return (
                                     <>
                                         {chat.userId.toString() === session?.user?.id ? (
