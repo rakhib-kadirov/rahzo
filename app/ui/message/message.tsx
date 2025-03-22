@@ -21,15 +21,6 @@ import Link from "next/link";
 //     transports: ['websocket']
 // })
 
-interface Message {
-    id: number;
-    userId: number;
-    text: string;
-    createdAt: string;
-    first_name: string;
-    last_name: string;
-    profile_photo: string;
-}
 
 // extraHeaders: { origin: 'Access-Control-Allow-Origin' }
 // const socket: Socket = io("ws://localhost:3001/")
@@ -40,6 +31,16 @@ interface User {
     id: string;
     first_name?: string | null;
     last_name?: string | null;
+}
+
+interface Message {
+    id: number;
+    userId: number;
+    text: string;
+    createdAt: string;
+    first_name: string;
+    last_name: string;
+    profile_photo: string;
 }
 
 interface Message {
@@ -123,37 +124,36 @@ export default function Message() {
     const otherUserId = searchParams.get('otherUserId');
 
     useEffect(() => {
-        if (!currentUserId || !otherUserId) return;
+        try {
+            if (!currentUserId || !otherUserId) return;
 
-        const fetchData = async () => {
-            try {
+            const fetchData = async () => {
                 const response = await fetch(`/api/auth/chats?otherUserId=${otherUserId}&currentUserId=${currentUserId}`)
                 if (!response.ok) {
                     console.error("Ошибка ответа API: ", response.status);
                     return;
                 }
-                
+
                 const data: { chat: Chat[] } = await response.json()
                 // console.log("Чаты: ", data.chat)
                 setChats(data.chat)
-            } catch (error) {
-                console.error('Fetch API chats - error: ', error)
             }
+            fetchData()
+
+            socket.on('newMessage', (message) => {
+                // console.log("Получено новое сообщение:", message)
+                setMessages((prev) => [...prev, message])
+                setChats((prevChats) =>
+                    prevChats.map((chat) =>
+                        chat.id === message.chatId
+                            ? { ...chat, message: [...(Array.isArray(chat.message) ? chat.message : [chat.message]), message] }
+                            : chat
+                    )
+                );
+            })
+        } catch (error) {
+            console.error('Fetch API chats - error: ', error)
         }
-        fetchData()
-
-        socket.on('newMessage', (message) => {
-            // console.log("Получено новое сообщение:", message)
-            setMessages((prev) => [...prev, message])
-            setChats((prevChats) =>
-                prevChats.map((chat) =>
-                    chat.id === message.chatId
-                        ? { ...chat, message: [...(Array.isArray(chat.message) ? chat.message : [chat.message]), message] }
-                        : chat
-                )
-            );
-        })
-
     }, [otherUserId, currentUserId])
     // console.log('CHATS: ', chats)
 
@@ -185,18 +185,18 @@ export default function Message() {
     // }, [])
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
+        try {
+            const fetchData = async () => {
                 const data = await fetch('/api/auth/chatParticipants')
                 const response: { chats: ChatParticipants[] } = await data.json()
 
                 // console.log("Чаты из чатов: ", response.chats.flat());
                 setChatParticipants(response.chats.flat());
-            } catch (error) {
-                console.error('Fetch API chatParticipants - error: ', error)
             }
+            fetchData()
+        } catch (error) {
+            console.error('Fetch API chatParticipants - error: ', error)
         }
-        fetchData()
     }, [])
     // console.log('chatParticipants', chatParticipants)
 
