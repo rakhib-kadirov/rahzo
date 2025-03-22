@@ -6,10 +6,12 @@ const prisma = new PrismaClient();
 
 export async function GET() {
     try {
-        let chats = await prisma.chat.findMany({
+        let chats = await prisma.chatParticipants.findMany({
             include: {
-                participants: { include: { user: { include: { message: true } } } },
-                message: true
+                // participants: { include: { user: { include: { message: true } } } },
+                // message: true,
+                user: true,
+                chat: { include: { message: true, participants: { include: { user: true } } } },
             }
         });
         console.log('CHATS_PART: ', chats)

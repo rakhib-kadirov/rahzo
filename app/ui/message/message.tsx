@@ -11,6 +11,7 @@ import '../global.css'
 // import { PrismaClient } from "@prisma/client";
 // import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 // import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 // const prisma = new PrismaClient()
@@ -70,10 +71,46 @@ interface Chat {
     message: Message[]
 }
 
+interface ChatParticipants {
+    chatId: number;
+    userId: number;
+    chat: {
+        id: number;
+        createdAt: string;
+        participants: {
+            chatId: number;
+            userId: number;
+            user: {
+                id: number;
+                text: string;
+                userId: number;
+                createdAt: string;
+                first_name: string;
+                last_name: string;
+                profile_photo: string;
+            }
+        }[];
+        message: {
+            id: number;
+            text: string;
+            userId: number;
+            createdAt: string;
+            first_name: string;
+            last_name: string;
+            profile_photo: string;
+        }[]
+    }
+    user: {
+        id: string;
+        first_name?: string | null;
+        last_name?: string | null;
+    }
+}
+
 export default function Message() {
     const [messages, setMessages] = useState<Message[]>([])
     const [chats, setChats] = useState<Chat[]>([])
-    const [chatParticipants, setChatParticipants] = useState<Chat[]>([])
+    const [chatParticipants, setChatParticipants] = useState<ChatParticipants[]>([])
     const [text, setText] = useState("");
 
     const { data: session } = useSession()
@@ -117,47 +154,47 @@ export default function Message() {
     console.log('CHATS: ', chats)
 
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await fetch('/api/auth/messages')
-                const response: { messages: Message[] } = await data.json()
-
-                if (Array.isArray(response.messages)) {
-                    setMessages(response.messages.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()));
-                } else {
-                    console.error("Unexpected data format:", response);
-                }
-
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        fetchData()
-
-        // socket.on('newMessage', (message) => {
-        //     console.log("Получено новое сообщение:", message)
-        //     setMessages((prev) => [...prev, message])
-        // })
-
-        return () => { socket.off('newMessage') }
-    }, [])
-
     // useEffect(() => {
     //     const fetchData = async () => {
     //         try {
-    //             const data = await fetch('/api/auth/chatParticipants')
+    //             const data = await fetch('/api/auth/messages')
     //             const response: { chats: Chat[] } = await data.json()
 
-    //             console.log("Чаты из чатов: ", response.chats);
-    //             setChatParticipants(response.chats);
+    //             if (Array.isArray(response.chats)) {
+    //                 // setMessages(response.messages.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()));
+    //                 setChats(response.chats)
+    //             } else {
+    //                 console.error("Unexpected data format:", response);
+    //             }
     //         } catch (error) {
     //             console.log(error)
     //         }
     //     }
     //     fetchData()
+
+    //     // socket.on('newMessage', (message) => {
+    //     //     console.log("Получено новое сообщение:", message)
+    //     //     setMessages((prev) => [...prev, message])
+    //     // })
+
+    //     // return () => { socket.off('newMessage') }
     // }, [])
-    // console.log('chatParticipants', chatParticipants)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await fetch('/api/auth/chatParticipants')
+                const response: { chats: ChatParticipants[] } = await data.json()
+
+                console.log("Чаты из чатов: ", response.chats.flat());
+                setChatParticipants(response.chats.flat());
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchData()
+    }, [])
+    console.log('chatParticipants', chatParticipants)
 
     const sendMessage = () => {
         socket.emit('sendMessage', { text, currentUserId, first_name, last_name, otherUserId })
@@ -176,19 +213,51 @@ export default function Message() {
                                 <Search />
                             </Suspense>
                         </div>
-                        Другие
-                        {chats.map((Chat) => {
+                        <div className="grid gap-2">
+                            {chatParticipants.map((chat) => {
+                                // const participantsArray = Array.isArray(chat.chat.participants) ? chat.chat.participants : [chat.chat.participants];
+                                console.log('UI_CHAT_PART: ', chat.chat.participants)
+                                return (
+                                    <>
+                                        {chat.userId.toString() === session?.user?.id ? (
+                                            <div className="grid gap-4">
+                                                {/* key={Chat.message.id} */}
+                                                <div className={clsx(
+                                                    "relative bg-red-300 rounded-[8px] min-w-[60px] min-h-[60px] gap-2 pl-[8px] pr-[8px] pt-[4px] pb-[4px] text-left",
+                                                )}>
+                                                    <Link href={`/dashboard/message?otherUserId=${chat.chat.participants.filter(part => (part.userId.toString() !== currentUserId ? part.user.id : null)).map(part => part.user.id)}&currentUserId=${currentUserId}`}>
+                                                        <div className="grid gap-2">
+                                                            <strong key={chat.chatId} className="text-[14px]">
+                                                                {chat.chat.participants.map(part => (<span>{part.userId.toString() !== currentUserId ? <span>{part.user.first_name} {part.user.last_name}</span> : ''}</span>))}
+                                                            </strong>
+                                                            <div className="flex">
+                                                                <div className="pr-[40px] max-w-[300px]">
+                                                                    <p>{chat.chat.message[chat.chat.message.length - 1]?.text}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <span className="absolute bottom-[2px] right-[8px] text-[12px]">
+                                                            <p>{format(new Date(chat.chat.message[chat.chat.message.length - 1].createdAt), 'H:mm')}</p>
+                                                        </span>
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        ) : ''}
+                                    </>
+                                )
+                            })}
+                        </div>
+                        {/* Другие */}
+                        {/* {chats.map((Chat) => {
                             const participantsArray = Array.isArray(Chat.participants) ? Chat.participants : [Chat.participants];
                             const messagesArray = Array.isArray(Chat.message) ? Chat.message : [Chat.message];
                             return (
                                 <div>
-                                    {/* key={Chat.message.id} */}
                                     <div className={clsx(
                                         "relative bg-red-300 rounded-[8px] min-w-[60px] min-h-[60px] gap-2 pl-[8px] pr-[8px] pt-[4px] pb-[4px] text-left",
                                     )}>
                                         <div className="grid gap-2">
                                             <strong className="text-[14px]">
-                                                {/* {participants.user?.id.toString() !== currentUserId ? <span>{participants.user?.first_name} {participants.user?.last_name}</span> : ''} */}
                                                 {participantsArray.map(part => (<span>{part.user?.id.toString() !== currentUserId ? <span>{part.user?.first_name} {part.user?.last_name}</span> : ''}</span>))}
                                             </strong>
                                             {messagesArray.length > 0 && (
@@ -207,22 +276,19 @@ export default function Message() {
                                     </div>
                                 </div>
                             )
-                        })}
+                        })} */}
                     </div>
                     <div className="grid w-full">
                         {chats.map((Chat) => {
                             const messagesArray = Array.isArray(Chat.message) ? Chat.message : [Chat.message];
-                            // console.log('userId: ', Chat.message.userId)
+                            // if (window.location.href === 'http://localhost:3000/dashboard/message') return null
                             return (
-                                <div key={Chat.id} className="grid gap-3 p-[10px] scroll-smooth overflow-y-auto bg-red-200 chat-container">
-                                    {/* {messages.map((msg) => {return (<div></div>)})} */}
+                                <div className="grid gap-3 p-[10px] scroll-smooth overflow-y-auto bg-red-200 chat-container">
                                     <div className="inline-block w-full ">
                                         {messagesArray.map((chat) => {
                                             const currentDate = format(new Date(chat.createdAt), 'H:mm')
-                                            // console.log('USER_ID_CHAT_MSG: ', chat.userId)
                                             return (
                                                 <div>
-                                                    {/* key={Chat.message.id} */}
                                                     <div id="blockRight" className={chat.userId?.toString() === session?.user?.id ? "text-right" : "text-left"}>
                                                         <div className={clsx(
                                                             "inline-flex items-end gap-3",
