@@ -126,15 +126,19 @@ export default function Message() {
         if (!currentUserId || !otherUserId) return;
 
         const fetchData = async () => {
-            const response = await fetch(`/api/auth/chats?otherUserId=${otherUserId}&currentUserId=${currentUserId}`)
-            if (!response.ok) {
-                console.error("Ошибка ответа API: ", response.status);
-                return;
+            try {
+                const response = await fetch(`/api/auth/chats?otherUserId=${otherUserId}&currentUserId=${currentUserId}`)
+                if (!response.ok) {
+                    console.error("Ошибка ответа API: ", response.status);
+                    return;
+                }
+                
+                const data: { chat: Chat[] } = await response.json()
+                // console.log("Чаты: ", data.chat)
+                setChats(data.chat)
+            } catch (error) {
+                console.error('Fetch API chats - error: ', error)
             }
-
-            const data: { chat: Chat[] } = await response.json()
-            // console.log("Чаты: ", data.chat)
-            setChats(data.chat)
         }
         fetchData()
 
@@ -189,7 +193,7 @@ export default function Message() {
                 // console.log("Чаты из чатов: ", response.chats.flat());
                 setChatParticipants(response.chats.flat());
             } catch (error) {
-                console.log(error)
+                console.error('Fetch API chatParticipants - error: ', error)
             }
         }
         fetchData()
