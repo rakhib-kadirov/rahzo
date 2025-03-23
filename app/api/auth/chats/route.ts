@@ -80,7 +80,7 @@ export async function GET(req: NextRequest) {
     console.log('USER_ID: ', otherUserId, ' ', currentUserId)
 
     // Проверяем входные данные
-    if (!currentUserId || !otherUserId || currentUserId === otherUserId) {
+    if (!currentUserId || !otherUserId) {
         console.log("Ошибка: некорректные userId");
         return NextResponse.json({ error: "Некорректные userId" }, { status: 400 });
     }

@@ -4,15 +4,19 @@ import { useEffect, useState } from "react"
 import { format } from "date-fns"
 import Image from "next/image";
 import Link from "next/link";
+import Document from "next/document";
 
 interface Post {
     id_post: number;
+    likes: number;
     body_text: string;
     date: string;
     first_name: string;
     last_name: string;
     profile_photo: string;
 }
+
+let likesCount: number = 0
 
 export default function Posts() {
     const [posts, setPosts] = useState<Post[]>([])
@@ -43,6 +47,13 @@ export default function Posts() {
         }
         fetchData()
     }, [])
+
+    // document.getElementById('likesBtn')?.addEventListener('click', () => {
+    //     const likesData = async () => {
+    //         return likesCount++
+    //     }
+    //     likesData()
+    // })
 
     return (
         <main className="grid gap-6 p-3">
@@ -111,11 +122,14 @@ export default function Posts() {
                         <div className="pt-[12]">
                             <div className="flex gap-3 items-center">
                                 {/* likes, comments, share */}
-                                <Link href={'/'}>
+                                {/* <Link href={'/'}> */}
+                                <button id="likesBtn">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 hover:fill-rose-700 hover:stroke-rose-700">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                                     </svg>
-                                </Link>
+                                    {posts.map(post => (post.likes))}
+                                </button>
+                                {/* </Link> */}
                                 <Link href={'/'}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 hover:stroke-sky-700">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />

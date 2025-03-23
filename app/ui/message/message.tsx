@@ -241,7 +241,7 @@ export default function Message() {
                                                             </div>
                                                         </div>
                                                         <span className="absolute bottom-[2px] right-[8px] text-[12px]">
-                                                            <p>{format(new Date(chat.chat.message[chat.chat.message.length - 1].createdAt), 'H:mm')}</p>
+                                                            <p>{format(new Date(chat.chat.message[chat.chat.message.length - 1]?.createdAt === undefined || null ? "0001-01-01T21:30:00.00Z" : chat.chat.message[chat.chat.message.length - 1].createdAt), 'H:mm')}</p>
                                                         </span>
                                                     </Link>
                                                 </div>
